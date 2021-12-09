@@ -1,0 +1,28 @@
+{
+  "name": "questions-and-answers",
+  "version": "1.0.0",
+  "description": "Questions and Answers API for project Atelier",
+  "main": "src/app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpp31-sdc-maids-a-milkin/questions-and-answers.git"
+  },
+  "author": "James Caughern",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpp31-sdc-maids-a-milkin/questions-and-answers/issues"
+  },
+  "homepage": "https://github.com/rpp31-sdc-maids-a-milkin/questions-and-answers#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^27.4.3"
+  }
+}
