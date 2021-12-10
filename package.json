@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/rpp31-sdc-maids-a-milkin/questions-and-answers#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
   },
   "devDependencies": {
     "jest": "^27.4.3"
