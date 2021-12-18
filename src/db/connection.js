@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const convertKeys = require('../utils/convertKeys.js');
 
 const uri = 'mongodb://localhost:27017/qa';
 
