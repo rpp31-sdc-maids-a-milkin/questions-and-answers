@@ -2,11 +2,12 @@
   "name": "questions-and-answers",
   "version": "1.0.0",
   "description": "Questions and Answers API for project Atelier",
-  "main": "src/app.js",
+  "main": "src/server.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
+    "start": "nodemon src/server.js",
     "test": "jest"
   },
   "repository": {
@@ -20,9 +21,12 @@
   },
   "homepage": "https://github.com/rpp31-sdc-maids-a-milkin/questions-and-answers#readme",
   "dependencies": {
+    "csv": "^6.0.4",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.1.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "underscore": "^1.13.1"
   },
   "devDependencies": {
     "eslint": "^8.4.1",
