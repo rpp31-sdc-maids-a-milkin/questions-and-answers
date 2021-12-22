@@ -6,27 +6,27 @@ const db = require('./db/connection.js');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/qa/questions', (req, res) => {
-  const { product_id, page, count } = req.query;
-  res.json({ product_id, page, count });
-});
+app.route('/qa/questions')
+  .get((req, res) => {
+    const { product_id, page, count } = req.query;
+    res.json({ product_id, page, count });
+  })
+  .post((req, res) => {
+    const { body, name, email, product_id } = req.body;
+    res.status(201).json({ body, name, email, product_id });
+  });
 
-app.get('/qa/questions/:question_id/answers', (req, res) => {
-  const questionId = req.params.question_id;
-  const { page, count } = req.query;
-  res.json({ questionId, page, count });
-});
-
-app.post('/qa/questions', (req, res) => {
-  const { body, name, email, product_id } = req.body;
-  res.status(201).json({ body, name, email, product_id });
-});
-
-app.post('/qa/questions/:question_id/answers', (req, res) => {
-  const questionId = req.params.question_id;
-  const { body, name, email, photos } = req.body;
-  res.status(201).json({ questionId, body, name, email, photos });
-});
+app.route('/qa/questions/:question_id/answers')
+  .get((req, res) => {
+    const questionId = req.params.question_id;
+    const { page, count } = req.query;
+    res.json({ questionId, page, count });
+  })
+  .post((req, res) => {
+    const questionId = req.params.question_id;
+    const { body, name, email, photos } = req.body;
+    res.status(201).json({ questionId, body, name, email, photos });
+  });
 
 app.put('/qa/questions/:question_id/helpful', (req, res) => {
   const questionId = req.params.question_id;
