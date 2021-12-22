@@ -1,5 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable camelcase */
+// db = connect('mongodb://localhost/qa');
+
 db.createCollection("photos", {
   validator: {
     $jsonSchema: {
