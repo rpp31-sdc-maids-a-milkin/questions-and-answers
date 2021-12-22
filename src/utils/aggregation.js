@@ -63,37 +63,3 @@ const aggregateData = () => {
 };
 
 aggregateData();
-
-// db.answers.find({ id: { $in: db.photos.find({}, { answer_id: 1, _id: 0 }) } });
-// db.answers.aggregate([{ $match: { id: { $in: db.photos.aggregate([{ $group: { _id: '$answer_id' } }]) } } }]);
-
-// db.photos.aggregate([
-//   {
-//     $lookup: {
-//       from: "answers",
-//       let: { photoAnswerId: "$answer_id" },
-//       pipeline: [
-//         {
-//           $match:
-//           {
-//             $expr: { $eq: ["$$photoAnswerId", "$id"] }
-//           }
-//         }
-//       ],
-//       as: "test"
-//     }
-//   }
-// ]);
-
-// db.answers.aggregate([
-//   {
-//     $lookup: {
-//       from: "photos",
-//       let: { answerId: "$id" },
-//       pipeline: [
-//         { $match: { $expr: { $eq: ["$answer_id", "$$answerId"] } } },
-//       ],
-//       as: "photos",
-//     }
-//   }
-// ]);
