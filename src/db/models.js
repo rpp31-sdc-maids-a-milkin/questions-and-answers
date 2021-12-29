@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const photoSchema = new Schema({
   id: Number,
   answer_id: Number,
-  photo: String
+  url: String
 });
 
 const answerSchema = new Schema({
@@ -16,7 +17,7 @@ const answerSchema = new Schema({
   body: String,
   date_written: Date,
   helpful: Number,
-  photos: Array
+  photos: [photoSchema]
 });
 
 const questionSchema = new Schema({
@@ -28,12 +29,13 @@ const questionSchema = new Schema({
   asker_name: String,
   asker_email: String,
   reported: Boolean,
-  answers: Array
+  answers: [answerSchema]
 });
+
 
 const Answer = mongoose.model('answer', answerSchema);
 const Photo = mongoose.model('photo', photoSchema);
-const Question = mongoose.model('question', questionSchema);
+const Question = mongoose.model('qa', questionSchema);
 
 module.exports = {
   Answer,
