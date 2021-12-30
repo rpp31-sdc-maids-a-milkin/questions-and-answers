@@ -54,12 +54,12 @@ const aggregateData = () => {
         date_written: 0,
       }
     },
-    { $out: "questionsAndAnswers" }
+    { $out: "qas" }
   ]);
 
   db.answersTemp.drop();
 
-  db.questionsAndAnswers.createIndex({ product_id: 1 });
+  db.qas.createIndex({ product_id: 1 });
 };
 
 aggregateData();

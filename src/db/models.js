@@ -33,12 +33,12 @@ const questionSchema = new Schema({
 });
 
 
-const Answer = mongoose.model('answer', answerSchema);
-const Photo = mongoose.model('photo', photoSchema);
+// const Answer = mongoose.model('answer', answerSchema);
+// const Photo = mongoose.model('photo', photoSchema);
 const Question = mongoose.model('qa', questionSchema);
 
 module.exports = {
-  Answer,
-  Photo,
+  // Answer,
+  // Photo,
   Question
 };
