@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const uri = 'mongodb://localhost:27017/qa';
 
-const conn = mongoose.connect(uri, { useNewUrlParser: true });
+const conn = mongoose.connect(uri);
 
 mongoose.connection.on('error', (err) => console.error(err));
 

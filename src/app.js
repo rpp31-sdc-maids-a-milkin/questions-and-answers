@@ -1,15 +1,23 @@
 /* eslint-disable camelcase */
 const express = require('express');
 const app = express();
-// const db = require('./db/connection.js');
+// const conn = require('./db/connection.js');
+const getQuestions = require('./controllers/getQuestions.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.route('/qa/questions')
-  .get((req, res) => {
+  .get((req, res, next) => {
     const { product_id, page, count } = req.query;
-    res.json({ product_id, page, count });
+    getQuestions(product_id, page, count, (err, data) => {
+      if (err) {
+        console.error(err);
+        next(err);
+      } else {
+        res.send(data);
+      }
+    });
   })
   .post((req, res) => {
     const { body, name, email, product_id } = req.body;
