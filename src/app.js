@@ -8,16 +8,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.route('/qa/questions')
-  .get((req, res, next) => {
+  .get((req, res) => {
     const { product_id, page, count } = req.query;
-    getQuestions(product_id, page, count, (err, data) => {
-      if (err) {
-        console.error(err);
-        next(err);
-      } else {
-        res.send(data);
-      }
-    });
+    res.json({ product_id, page, count });
   })
   .post((req, res) => {
     const { body, name, email, product_id } = req.body;
