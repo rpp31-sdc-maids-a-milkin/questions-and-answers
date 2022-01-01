@@ -2,9 +2,6 @@ const request = require('supertest');
 const app = require('../src/app.js');
 // const mongoose = require('mongoose');
 
-afterAll(() => {
-  server.close();
-});
 
 describe('Test the questions path', () => {
   test('It should respond to a GET request', () => {
@@ -13,8 +10,7 @@ describe('Test the questions path', () => {
       .expect(200)
       .catch((err) => {
         console.error(err);
-      })
-      .end();
+      });
   });
 });
 

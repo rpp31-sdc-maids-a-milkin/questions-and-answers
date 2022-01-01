@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 // const conn = require('./db/connection.js');
-const getQuestions = require('./controllers/getQuestions.js');
+// const getQuestions = require('./controllers/getQuestions.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
