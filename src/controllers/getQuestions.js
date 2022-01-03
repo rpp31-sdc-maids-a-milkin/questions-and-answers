@@ -1,18 +1,16 @@
+/* eslint-disable camelcase */
 const { Question } = require('../db/models.js');
 const bucket = require('../utils/bucket.js');
-const { conn } = require('../db/connection.js');
-const mongoose = require('mongoose');
+const mapQuestions = require('../utils/mapQuestionList.js');
 
 const getQuestions = function(productId, page = 1, count = 5, callback) {
   Question.find({product_id: productId})
     .then((doc) => {
       let pages = bucket(doc, count);
-      callback(null, doc[page - 1]);
+      Promise.resolve(mapQuestions(pages[page - 1]))
+        .then((mapped) => callback(null, mapped));
     })
-    .then(() => mongoose.disconnect())
-    .catch((err) => {
-      callback(err, null);
-    });
+    .catch((err) => { callback(err, null); });
 };
 
 module.exports = getQuestions;

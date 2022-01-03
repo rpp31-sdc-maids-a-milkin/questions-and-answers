@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 const express = require('express');
 const app = express();
-// const conn = require('./db/connection.js');
-// const getQuestions = require('./controllers/getQuestions.js');
+const getQuestions = require('./controllers/getQuestions.js');
+const getAnswers = require('./controllers/getAnswers.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -10,7 +10,16 @@ app.use(express.urlencoded({ extended: true }));
 app.route('/qa/questions')
   .get((req, res) => {
     const { product_id, page, count } = req.query;
-    res.json({ product_id, page, count });
+    // res.json({ product_id, page, count });
+    getQuestions(product_id, page, count, (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(400).json(err);
+      } else {
+        // console.log(data);
+        res.json(data);
+      }
+    });
   })
   .post((req, res) => {
     const { body, name, email, product_id } = req.body;
@@ -21,7 +30,16 @@ app.route('/qa/questions/:question_id/answers')
   .get((req, res) => {
     const questionId = req.params.question_id;
     const { page, count } = req.query;
-    res.json({ questionId, page, count });
+    getAnswers(questionId, page, count, (err, data) => {
+      if (err) {
+        console.error(err);
+        res.json(err);
+      } else {
+        console.log(data);
+        res.json(data);
+
+      }
+    });
   })
   .post((req, res) => {
     const questionId = req.params.question_id;

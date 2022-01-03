@@ -1,6 +1,6 @@
 const bucket = function(array, count) {
   if (array.length <= count) {
-    return [[...array]];
+    return [[...array.map((i) => i.toObject())]];
   }
   let buckets = [];
   let numBuckets = Math.floor(array.length / count);
