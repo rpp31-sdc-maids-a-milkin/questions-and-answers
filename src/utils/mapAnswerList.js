@@ -8,7 +8,8 @@ const mapPhotos = (photos) => {
 
 const mapAnswers = (answers) => {
   return answers.map((answer) => {
-    let a = answer.toObject();
+    // console.log(answer);
+    let a = answer; //answer.toObject();
     return {
       answer_id: a.id,
       body: a.body,

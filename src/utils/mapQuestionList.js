@@ -1,20 +1,22 @@
 /* eslint-disable camelcase */
 const mapAnswers = (docArray) => {
   let result = {};
-  docArray.forEach((doc) => {
-    let mappedPhotos = doc.photos.map((photo) => {
-      const { id, url } = photo;
-      return { id, url };
+  if (docArray.length) {
+    docArray.forEach((doc) => {
+      let mappedPhotos = doc.photos.map((photo) => {
+        const { id, url } = photo;
+        return { id, url };
+      });
+      result[doc.id] = {
+        id: doc.id,
+        body: doc.body,
+        date: doc.date,
+        answerer_name: doc.answerer_name,
+        helpfulness: doc.helpful,
+        photos: mappedPhotos
+      };
     });
-    result[doc.id] = {
-      id: doc.id,
-      body: doc.body,
-      date: doc.date,
-      answerer_name: doc.answerer_name,
-      helpfulness: doc.helpful,
-      photos: mappedPhotos
-    };
-  });
+  };
   return result;
 };
 

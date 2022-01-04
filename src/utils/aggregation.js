@@ -16,18 +16,21 @@ const aggregateData = () => {
         let: { answerId: "$id" },
         pipeline: [
           { $match: { $expr: { $eq: ["$answer_id", "$$answerId"] } } },
+          { $project: { _id: 1 } }
         ],
-        as: "photos",
+        as: "photosIds",
       }
     },
     {
       $addFields: {
-        date: { $toDate: "$date_written" }
+        date: { $toDate: "$date_written" },
+        photos: "$photosIds._id"
       }
     },
     {
       $project: {
         date_written: 0,
+        photosIds: 0
       }
     },
     { $out: "answersTemp" }
@@ -39,27 +42,34 @@ const aggregateData = () => {
     {
       $lookup: {
         from: "answersTemp",
-        localField: "id",
-        foreignField: "question_id",
-        as: "answers",
+        let: { questionId: "$id" },
+        pipeline: [
+          { $match: { $expr: { $eq: ["$question_id", "$$questionId"] } } },
+          { $project: { _id: 1 } }
+        ],
+        as: "answersIds",
       }
     },
     {
       $addFields: {
-        question_date: { $toDate: "$date_written" }
+        question_date: { $toDate: "$date_written" },
+        answers: "$answersIds._id"
       }
     },
     {
       $project: {
         date_written: 0,
+        answersIds: 0
       }
     },
     { $out: "qas" }
   ]);
 
-  db.answersTemp.drop();
-
   db.qas.createIndex({ product_id: 1 });
+  db.answers.drop();
+  db.questions.drop();
+  db.answersTemp.renameCollection('answers');
+  db.qas.renameCollection('questions');
 };
 
 aggregateData();

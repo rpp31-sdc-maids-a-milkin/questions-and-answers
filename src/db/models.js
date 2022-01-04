@@ -8,6 +8,8 @@ const photoSchema = new Schema({
   url: String
 });
 
+const Photo = mongoose.model('Photo', photoSchema);
+
 const answerSchema = new Schema({
   id: Number,
   question_id: { type: Number, index: true },
@@ -17,8 +19,10 @@ const answerSchema = new Schema({
   body: String,
   date_written: Date,
   helpful: Number,
-  photos: [photoSchema]
+  photos: [{type: Schema.Types.ObjectId, ref: 'Photo'}]
 });
+
+const Answer = mongoose.model('Answer', answerSchema);
 
 const questionSchema = new Schema({
   id: Number,
@@ -29,16 +33,16 @@ const questionSchema = new Schema({
   asker_name: String,
   asker_email: String,
   reported: Boolean,
-  answers: [answerSchema]
+  answers: [{type: Schema.Types.ObjectId, ref: 'Answer'}]
 });
 
-
-// const Answer = mongoose.model('answer', answerSchema);
-// const Photo = mongoose.model('photo', photoSchema);
-const Question = mongoose.model('qa', questionSchema);
+const Question = mongoose.model('Question', questionSchema);
 
 module.exports = {
-  // Answer,
-  // Photo,
-  Question
+  Answer,
+  answerSchema,
+  Photo,
+  photoSchema,
+  Question,
+  questionSchema,
 };

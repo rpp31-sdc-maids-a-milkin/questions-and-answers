@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const getQuestions = require('./controllers/getQuestions.js');
 const getAnswers = require('./controllers/getAnswers.js');
+const postAnswer = require('./controllers/postAnswer.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,7 +36,6 @@ app.route('/qa/questions/:question_id/answers')
         console.error(err);
         res.json(err);
       } else {
-        console.log(data);
         res.json(data);
 
       }
@@ -44,6 +44,7 @@ app.route('/qa/questions/:question_id/answers')
   .post((req, res) => {
     const questionId = req.params.question_id;
     const { body, name, email, photos } = req.body;
+    postAnswer({})
     res.status(201).json({ questionId, body, name, email, photos });
   });
 
