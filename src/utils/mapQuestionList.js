@@ -16,7 +16,7 @@ const mapAnswers = (docArray) => {
         photos: mappedPhotos
       };
     });
-  };
+  }
   return result;
 };
 

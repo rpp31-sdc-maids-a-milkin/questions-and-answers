@@ -3,17 +3,18 @@ const mongoose = require('mongoose');
 const getQuestions = require('../src/controllers/getQuestions.js')
 const getAnswers = require('../src/controllers/getAnswers.js');
 const postAnswer = require('../src/controllers/postAnswer.js');
-const initializeMongoServer = require('./mongoConfigTesting.js');
+const postQuestion = require('../src/controllers/postQuestion.js');
+// const initializeMongoServer = require('./mongoConfigTesting.js');
 
-initializeMongoServer();
+beforeAll(async () => await mongoose.connect(process.env.MONGO_URL));
+afterAll(async () => await mongoose.connection.close());
 
 describe('Test db functions', () => {
+  let qs;
+  let name;
 
-  afterAll(async () => await mongoose.connection.close())
 
   test('It should create a Question document', async () => {
-    const getQuestions = require('../src/controllers/getQuestions.js');
-    const postQuestion = require('../src/controllers/postQuestion.js');
     const question = {
       body: 'test',
       name: 'testName',
@@ -29,18 +30,35 @@ describe('Test db functions', () => {
       };
     });
     await expect(id).toBeInstanceOf(ObjectId);
-    let qs;
-    // await getQuestions('999999999', 1, 5, (err, questions) => {
-    //   try {
-    //     if (err) {
-    //       console.error(err.message);
-    //     } else {
-    //       qs = questions;
-    //     }
-    //   } catch (error) {
-    //     console.error(error.message);
-    //   }
-    // })
-    // expect(qs[0].name).toEqual('testName')
+    await getQuestions('999999999', 1, 5, (err, questions) => {
+      try {
+        if (err) {
+          console.error(err.message);
+        } else {
+          qs = questions;
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    })
+    await expect(qs.results[0].asker_name).toEqual('testName')
+  });
+
+  test('It should add an answer to a question', async () => {
+    const answer = {
+      answerer_name: 'answer person',
+      answerer_email: 'answer@answer.email',
+      body: 'I will answer your question',
+      photos: [{ id: 1, answer_id: 9, url: 'http://link.tld/pic.jpg' }, { id: 2, answer_id: 9, url: 'https://link.tld/picagain.jpg' }],
+    }
+    await postAnswer(qs.results[0]._id, 9, answer, (err, answers) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log(answers);
+        let name = answer.results[0].answerer_name;
+      }
+    })
+    await expect(name).toEqual('answer person');
   });
 });

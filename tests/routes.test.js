@@ -1,72 +1,42 @@
 const request = require('supertest');
 const app = require('../src/app.js');
-const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
-const getQuestions = require('../src/controllers/getQuestions.js')
-const getAnswers = require('../src/controllers/getAnswers.js');
-const postAnswer = require('../src/controllers/postAnswer.js');
-const initializeMongoServer = require('./mongoConfigTesting.js');
 
-initializeMongoServer();
+beforeAll(async () => await mongoose.connect(process.env.MONGO_URL), 10000)
+afterAll(async () => await mongoose.connection.close());
 
-describe('Test db functions', () => {
-
-  afterAll(async () => await mongoose.connection.close())
-
-  test('It should create a Question document', async () => {
-    const getQuestions = require('../src/controllers/getQuestions.js');
-    const postQuestion = require('../src/controllers/postQuestion.js');
-    const question = {
-      body: 'test',
-      name: 'testName',
-      email: 'email@email.com',
-      product_id: '999999999'
-    };
-    let id;
-    await postQuestion(question, (err, q) => {
-      if (err) {
-        console.error(err.message)
-      } else {
-        id = q._id;
-      };
-    });
-    await expect(id).toBeInstanceOf(ObjectId);
-    let qs;
-    // await getQuestions('999999999', 1, 5, (err, questions) => {
-    //   try {
-    //     if (err) {
-    //       console.error(err.message);
-    //     } else {
-    //       qs = questions;
-    //     }
-    //   } catch (error) {
-    //     console.error(error.message);
-    //   }
-    // })
-    // expect(qs[0].name).toEqual('testName')
-  });
-});
 
 describe('Test the questions path', () => {
+  test('it should create a question', async () => {
+    // await initializeMongoServer();
+    let question = {
+      body: 'I have a question',
+      name: 'Question Person',
+      email: 'question@person.com',
+      product_id: 99999
+    }
+    return request(app)
+      .post('/qa/questions')
+      .send(question)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      // .expect(200)
+      .then((response) => {
+        expect(response.body._id).toBeTruthy()
+      })
+  })
+
   test('It should respond to a GET request', () => {
     return request(app)
-      .get('/qa/questions?product_id=32')
-      .expect(200)
-      .catch((err) => {
-        console.error(err);
-      });
+      .get('/qa/questions?product_id=99999')
+      .expect(200);
   });
 });
-
-
 
 describe('Test the answers path', () => {
   test('It should respond to a GET request', () => {
     return request(app)
-      .get('/qa/questions/34555/answers?page=asdf')
-      .expect(200)
-      .catch((err) => {
-        console.error(err);
-      });
+      .get('/qa/questions/99999/answers')
+      .expect(200);
   });
 });
