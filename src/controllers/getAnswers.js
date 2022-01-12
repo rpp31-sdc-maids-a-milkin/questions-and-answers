@@ -1,17 +1,29 @@
-const { Question } = require('../db/models.js');
-const mapAnswers = require('../utils/mapAnswerList.js');
+/* eslint-disable default-param-last */
+const { Question } = require('../db/models');
+const mapAnswers = require('../utils/mapAnswerList');
 
-const getAnswers = function(questionId, page = 1, count = 5, callback) {
-  Question.findOne({id: questionId})
+const getAnswers = function (questionId, page = 1, count = 5, callback) {
+  let mappedAnswers;
+  Question.findOne({ id: questionId }).populate({ path: 'answers', populate: { path: 'photos' } })
     .then((data) => {
-      let mappedAnswers = {
-        question: questionId,
-        page: page,
-        count: count,
-        results: mapAnswers(data.answers)
-      };
-      callback(null, mappedAnswers);
+      if (!data.answers.length) {
+        mappedAnswers = {
+          question: questionId,
+          page,
+          count,
+          results: [],
+        };
+      } else {
+        mappedAnswers = {
+          question: questionId,
+          page,
+          count,
+          results: mapAnswers(data.answers),
+        };
+      }
+      return mappedAnswers;
     })
+    .then((answers) => callback(null, answers))
     .catch((err) => callback(err, null));
 };
 

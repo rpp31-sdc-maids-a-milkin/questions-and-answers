@@ -8,5 +8,5 @@ const conn = mongoose.connect(uri);
 mongoose.connection.on('error', (err) => console.error(err));
 
 module.exports = {
-  conn
+  conn,
 };
