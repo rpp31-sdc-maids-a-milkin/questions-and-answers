@@ -11,7 +11,13 @@ const getQuestions = function(productId, page = 1, count = 5, callback) {
       } else {
         result = doc;
       }
-      const data = mapQuestions(result);
+      let data = mapQuestions(result);
+      if (data === -1) {
+        data = {
+          product_id: productId,
+          results: [],
+        };
+      }
       callback(null, data);
     })
     .catch((err) => { callback(err, null); });

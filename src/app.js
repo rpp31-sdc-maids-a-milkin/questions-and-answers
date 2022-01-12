@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-param-reassign */
-/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars, no-param-reassign, camelcase */
+require('dotenv').config();
+require('newrelic');
 const express = require('express');
 
 const app = express();

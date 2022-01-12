@@ -33,9 +33,15 @@ const mapQuestion = (doc) => {
   };
 };
 
-const mapQuestions = (questions) => ({
-  product_id: questions[0].product_id,
-  results: questions.map((question) => mapQuestion(question)),
-});
+const mapQuestions = (questions) => {
+  console.log(questions);
+  if (questions.length === 0) {
+    return -1;
+  }
+  return {
+    product_id: questions[0].product_id,
+    results: questions.map((question) => mapQuestion(question)),
+  };
+};
 
 module.exports = mapQuestions;
