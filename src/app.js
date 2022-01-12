@@ -1,16 +1,20 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
 const express = require('express');
+
 const app = express();
 const cors = require('cors');
-const getQuestions = require('./controllers/getQuestions.js');
-const getAnswers = require('./controllers/getAnswers.js');
-const postAnswer = require('./controllers/postAnswer.js');
-const postQuestion = require('./controllers/postQuestion.js');
-const markHelpful = require('./controllers/markHelpful.js');
-const report = require('./controllers/report.js');
-const Counters = require('./controllers/counters.js');
+const getQuestions = require('./controllers/getQuestions');
+const getAnswers = require('./controllers/getAnswers');
+const postAnswer = require('./controllers/postAnswer');
+const postQuestion = require('./controllers/postQuestion');
+const markHelpful = require('./controllers/markHelpful');
+const report = require('./controllers/report');
+const Counters = require('./controllers/counters');
 
 const counter = new Counters();
+counter.reset();
 
 app.use(cors());
 app.use(express.json());
@@ -42,7 +46,6 @@ app.route('/qa/questions')
     const questionId = counter.getQuestionId();
     postQuestion(questionId, req.body, (err, data) => {
       if (err) {
-        console.log('errored in post if statement')
         counter.reset();
         next(err);
       } else {
@@ -121,7 +124,7 @@ app.put('/qa/answers/:answer_id/report', (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).json({error: err.message});
+  res.status(500).json({ error: err.message });
 });
 
 module.exports = app;

@@ -14,14 +14,14 @@ const mapAnswers = (answers) => {
     return answers;
   }
   return answers.map((answer) => {
-    // console.log(answer);
-    let a = answer; //answer.toObject();
+    const a = answer;
     return {
       answer_id: a.id,
       body: a.body,
+      date: a.date_written,
       answerer_name: a.answerer_name,
       helpfulness: a.helpful,
-      photos: mapPhotos(a.photos)
+      photos: mapPhotos(a.photos),
     };
   });
 };

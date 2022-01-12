@@ -1,34 +1,42 @@
-const { Answer, Question, Photo } = require('../db/models.js');
+const { Answer, Question, Photo } = require('../db/models');
 
 class Counters {
   constructor() {
-    this.answerCount = Answer.count();
-    this.questionCount = Question.count();
-    this.photoCount = Photo.count();
+    this.answerCount = 0;
+    this.questionCount = 0;
+    this.photoCount = 0;
+    this.reset = this.reset.bind(this);
   }
 
   getAnswerId() {
-    let count = this.answerCount;
-    this.answerCount++;
+    const count = this.answerCount;
+    this.answerCount += 1;
     return count;
   }
 
   getQuestionId() {
-    let count = this.questionCount;
-    this.questionCount++;
+    const count = this.questionCount;
+    this.questionCount += 1;
     return count;
   }
 
   getPhotoId() {
-    let count = this.answerCount;
-    this.answerCount++;
+    const count = this.answerCount;
+    this.answerCount += 1;
     return count;
   }
 
-  reset() {
-    this.answerCount = Answer.count();
-    this.questionCount = Question.count();
-    this.photoCount = Photo.count();
+  async reset() {
+    Promise.all([
+      await Answer.countDocuments(),
+      await Question.countDocuments(),
+      await Photo.countDocuments(),
+    ])
+      .then((counts) => {
+        [this.answerCount,
+          this.questionCount,
+          this.photoCount] = counts;
+      });
   }
 }
 
