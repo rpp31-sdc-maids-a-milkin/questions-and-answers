@@ -30,7 +30,7 @@ const postAnswer = async (questionId, answerId, answer, callback) => {
     const data = await Question.findOneAndUpdate(
       { question_id: answer.questionId },
       { $push: { answers: [newId] } },
-    );
+    ).lean().populate({ path: 'answers', populate: { path: 'photos' } });
     await callback(null, data);
   } catch (err) {
     callback(err, null);

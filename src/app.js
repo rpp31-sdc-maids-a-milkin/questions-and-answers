@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-param-reassign */
-/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars, no-param-reassign, camelcase */
+require('dotenv').config();
+// require('newrelic');
 const express = require('express');
 
 const app = express();
@@ -102,8 +102,8 @@ app.put('/qa/questions/:question_id/report', (req, res, next) => {
 });
 
 app.put('/qa/answers/:answer_id/helpful', (req, res, next) => {
-  const questionId = req.params.question_id;
-  markHelpful('answer', questionId, (err, data) => {
+  const answerId = req.params.answer_id;
+  markHelpful('answer', answerId, (err, data) => {
     if (err) {
       next(err);
     } else {
@@ -113,8 +113,8 @@ app.put('/qa/answers/:answer_id/helpful', (req, res, next) => {
 });
 
 app.put('/qa/answers/:answer_id/report', (req, res, next) => {
-  const questionId = req.params.question_id;
-  report('answer', questionId, (err, data) => {
+  const answerId = req.params.answer_id;
+  report('answer', answerId, (err, data) => {
     if (err) {
       next(err);
     } else {

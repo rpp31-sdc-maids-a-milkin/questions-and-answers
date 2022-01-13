@@ -1,6 +1,6 @@
 const app = require('./app');
 
-const port = 3002;
+const port = process.env.PORT || 3002;
 const conn = require('./db/connection');
 
 app.listen(port, () => {

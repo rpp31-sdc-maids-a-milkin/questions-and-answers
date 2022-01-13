@@ -3,7 +3,8 @@ const { Question } = require('../db/models');
 const mapQuestions = require('../utils/mapQuestionList');
 
 const getQuestions = function(productId, page = 1, count = 5, callback) {
-  return Question.find({ product_id: productId }).lean().limit(count * page).populate({ path: 'answers', populate: { path: 'photos' } })
+  return Question.find({ product_id: productId, reported: false }).lean().limit(count * page).populate({ path: 'answers', populate: { path: 'photos' } })
+    .then()
     .then((doc) => {
       let result;
       if (page > 1) {
@@ -11,7 +12,13 @@ const getQuestions = function(productId, page = 1, count = 5, callback) {
       } else {
         result = doc;
       }
-      const data = mapQuestions(result);
+      let data = mapQuestions(result);
+      if (data === -1) {
+        data = {
+          product_id: productId,
+          results: [],
+        };
+      }
       callback(null, data);
     })
     .catch((err) => { callback(err, null); });
