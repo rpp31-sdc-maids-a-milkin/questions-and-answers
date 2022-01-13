@@ -8,9 +8,12 @@ beforeAll(async () => mongoose.connect(process.env.MONGO_URL));
 afterAll(async () => mongoose.connection.close());
 
 let qid;
+let helpfulAnswerId;
+let reportedQuestion;
+let reportedAnswer;
 
 describe('Test the questions path', () => {
-  test('it should create a question', async () => {
+  test('it should create a question', () => {
     const question = {
       body: 'I have a question',
       name: 'Question Person',
@@ -41,18 +44,34 @@ describe('Test the questions path', () => {
     )
     .then((res) => {
       expect(res).toBeTruthy();
-      expect(res.body).toEqual('this is an answer');
     }));
+
+  test('Answer should have been created', () => request(app)
+    .get(`/qa/questions/${qid}/answers`)
+    .expect(200)
+    .then((res) => {
+      const answer = res.body.results[0];
+      helpfulAnswerId = answer.answer_id;
+      expect(answer.body).toEqual('this is an answer');
+    }));
+
+  test('it should mark a question as helpful', () => request(app)
+    .put(`/qa/questions/${qid}/helpful`)
+    .expect(204));
+
+  test('it should mark an answer as helpful', () => {
+    const putUrl = `/qa/answers/${helpfulAnswerId}/helpful`;
+    return request(app)
+      .put(putUrl)
+      .expect(204);
+  });
 
   test('It should respond to a GET request', () => request(app)
     .get('/qa/questions?product_id=99999')
-    .expect(200));
-});
-
-describe('Test the answers path', () => {
-  test('It should respond to a GET request', () => {
-    request(app)
-      .get(`/qa/questions/${qid}/answers`)
-      .expect(200);
-  });
+    .expect(200)
+    .then((res) => {
+      const question = res.body.results[0];
+      expect(question.question_helpfulness).toEqual(1);
+      expect(question.answers[helpfulAnswerId].helpfulness).toEqual(1);
+    }));
 });

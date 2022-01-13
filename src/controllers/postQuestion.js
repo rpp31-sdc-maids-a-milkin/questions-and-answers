@@ -4,7 +4,8 @@ const { Question } = require('../db/models.js');
 const postQuestion = (questionId, question, callback) => {
   const { body, name, email, product_id } = question;
   const q = new Question({
-    product_id: product_id,
+    id: questionId,
+    product_id,
     question_body: body,
     asker_name: name,
     asker_email: email,

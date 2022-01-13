@@ -36,7 +36,7 @@ export const options = {
       startTime: '90s',
       duration: '30s',
       preAllocatedVUs: 1000, // how large the initial pool of VUs would be
-      maxVUs: 2000, // if the preAllocatedVUs are not enough, we can initialize more
+      maxVUs: 1500, // if the preAllocatedVUs are not enough, we can initialize more
     },
   },
 };
@@ -45,6 +45,6 @@ export default () => {
   const questionId = Math.ceil(Math.random() * 1000011);
   http.get(`http://localhost:3002/qa/questions?product_id=${questionId}`, { tags: { name: 'questions' } });
   // sleep(1);
-  // http.get(`http://localhost:3002/qa/questions/${questionId}/answers`, { tags: { name: 'questions' } });
+  http.get(`http://localhost:3002/qa/questions/${questionId}/answers`, { tags: { name: 'questions' } });
   // sleep(1);
 };

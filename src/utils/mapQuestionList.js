@@ -34,7 +34,6 @@ const mapQuestion = (doc) => {
 };
 
 const mapQuestions = (questions) => {
-  console.log(questions);
   if (questions.length === 0) {
     return -1;
   }
