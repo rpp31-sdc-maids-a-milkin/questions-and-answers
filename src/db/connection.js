@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const mongoose = require('mongoose');
 
-const uri = 'mongodb://localhost:27017/qa';
+const uri = process.env.MONGO_URL || 'mongodb://localhost:27017/qa';
 
 const conn = mongoose.connect(uri);
 
