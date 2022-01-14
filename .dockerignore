@@ -1,0 +1,7 @@
+coverage
+dataset
+node_modules
+config/*
+.vscode
+.env
+./*.log
