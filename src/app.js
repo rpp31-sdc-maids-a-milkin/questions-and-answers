@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars, no-param-reassign, camelcase */
-require('dotenv').config();
 // require('newrelic');
 const express = require('express');
 
