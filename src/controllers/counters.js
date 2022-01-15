@@ -28,9 +28,9 @@ class Counters {
 
   async reset() {
     Promise.all([
-      await Answer.countDocuments(),
-      await Question.countDocuments(),
-      await Photo.countDocuments(),
+      await Answer.estimatedDocumentCount(),
+      await Question.estimatedDocumentCount(),
+      await Photo.estimatedDocumentCount(),
     ])
       .then((counts) => {
         [this.answerCount,

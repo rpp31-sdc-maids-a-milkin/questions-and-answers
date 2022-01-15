@@ -6,20 +6,14 @@ const getAnswers = function (questionId, page = 1, count = 5, callback) {
   let mappedAnswers;
   Question.findOne({ id: questionId, reported: false }).populate({ path: 'answers', populate: { path: 'photos' } })
     .then((data) => {
-      if (!data.answers.length) {
-        mappedAnswers = {
-          question: questionId,
-          page,
-          count,
-          results: [],
-        };
-      } else {
-        mappedAnswers = {
-          question: questionId,
-          page,
-          count,
-          results: mapAnswers(data.answers),
-        };
+      mappedAnswers = {
+        question: questionId,
+        page,
+        count,
+        results: mapAnswers(data.answers),
+      };
+      if (mappedAnswers.results === -1) {
+        mappedAnswers.results = {};
       }
       return mappedAnswers;
     })

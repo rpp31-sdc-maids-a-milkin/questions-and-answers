@@ -10,8 +10,9 @@ const mapPhotos = (photos) => {
 };
 
 const mapAnswers = (answers) => {
-  if (!answers || answers.length === 0) {
-    return answers;
+  console.log(answers)
+  if (answers.length === 0) {
+    return -1;
   }
   return answers.map((answer) => {
     const a = answer;
