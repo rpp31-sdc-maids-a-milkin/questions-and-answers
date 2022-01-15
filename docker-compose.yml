@@ -1,6 +1,7 @@
-version: "3.9"
+version: "3.3"
 services:
   qa:
-    image: "jcaughern/qa"
+    env_file: .env
+    image: "jcaughern/qa:latest"
     ports:
       - "3002:3002"
