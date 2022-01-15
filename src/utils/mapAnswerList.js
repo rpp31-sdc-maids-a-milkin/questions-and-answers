@@ -10,7 +10,6 @@ const mapPhotos = (photos) => {
 };
 
 const mapAnswers = (answers) => {
-  console.log(answers)
   if (answers.length === 0) {
     return -1;
   }

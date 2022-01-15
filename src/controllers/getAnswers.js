@@ -4,7 +4,7 @@ const mapAnswers = require('../utils/mapAnswerList');
 
 const getAnswers = function (questionId, page = 1, count = 5, callback) {
   let mappedAnswers;
-  Question.findOne({ id: questionId, reported: false }).populate({ path: 'answers', populate: { path: 'photos' } })
+  Question.findOne({ id: questionId }).populate({ path: 'answers', populate: { path: 'photos' } })
     .then((data) => {
       mappedAnswers = {
         question: questionId,
@@ -13,7 +13,7 @@ const getAnswers = function (questionId, page = 1, count = 5, callback) {
         results: mapAnswers(data.answers),
       };
       if (mappedAnswers.results === -1) {
-        mappedAnswers.results = {};
+        mappedAnswers.results = [];
       }
       return mappedAnswers;
     })

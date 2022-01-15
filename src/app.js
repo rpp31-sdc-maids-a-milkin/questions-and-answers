@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars, no-param-reassign, camelcase */
-// require('newrelic');
+if (process.env.NEWRELIC) {
+  require('newrelic');
+}
 const express = require('express');
 
 const app = express();

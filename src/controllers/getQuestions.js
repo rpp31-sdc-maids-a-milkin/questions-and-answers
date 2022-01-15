@@ -4,7 +4,6 @@ const mapQuestions = require('../utils/mapQuestionList');
 
 const getQuestions = function(productId, page = 1, count = 5, callback) {
   return Question.find({ product_id: productId, reported: false }).lean().limit(count * page).populate({ path: 'answers', populate: { path: 'photos' } })
-    .then()
     .then((doc) => {
       let result;
       if (page > 1) {
