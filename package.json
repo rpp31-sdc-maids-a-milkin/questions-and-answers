@@ -8,6 +8,10 @@
   },
   "scripts": {
     "start": "node src/server.js",
+<<<<<<< HEAD
+=======
+    "start:dev": "nodemon src/server.js",
+>>>>>>> main
     "test": "jest  --testEnvironment=node --runInBand --forceExit",
     "testCoverage": "jest --testEnvironment=node --runInBand --coverage --forceExit",
     "testRoutes": "jest --testEnvironment=node --runInBand --forceExit routes.test.js"
