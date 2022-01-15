@@ -8,7 +8,6 @@ db.photos.createIndex({ answer_id: 1 });
 db.questions.createIndex({ id: 1 });
 
 const aggregateData = () => {
-
   db.answers.aggregate([
     {
       $lookup: {
@@ -16,27 +15,27 @@ const aggregateData = () => {
         let: { answerId: "$id" },
         pipeline: [
           { $match: { $expr: { $eq: ["$answer_id", "$$answerId"] } } },
-          { $project: { _id: 1 } }
+          { $project: { _id: 1 } },
         ],
         as: "photosIds",
-      }
+      },
     },
     {
       $addFields: {
         date: { $toDate: "$date_written" },
-        photos: "$photosIds._id"
-      }
+        photos: "$photosIds._id",
+      },
     },
     {
       $project: {
         date_written: 0,
-        photosIds: 0
-      }
+        photosIds: 0,
+      },
     },
-    { $out: "answersTemp" }
+    { $out: "answersTemp" },
   ]);
 
-  db.answersTemp.createIndex({ question_id: 1, id: -1 });
+  // db.answersTemp.createIndex({ question_id: 1, id: -1 });
 
   db.questions.aggregate([
     {
@@ -45,24 +44,24 @@ const aggregateData = () => {
         let: { questionId: "$id" },
         pipeline: [
           { $match: { $expr: { $eq: ["$question_id", "$$questionId"] } } },
-          { $project: { _id: 1 } }
+          { $project: { _id: 1 } },
         ],
         as: "answersIds",
-      }
+      },
     },
     {
       $addFields: {
         question_date: { $toDate: "$date_written" },
-        answers: "$answersIds._id"
-      }
+        answers: "$answersIds._id",
+      },
     },
     {
       $project: {
         date_written: 0,
-        answersIds: 0
-      }
+        answersIds: 0,
+      },
     },
-    { $out: "qas" }
+    { $out: "qas" },
   ]);
 
   db.qas.createIndex({ product_id: 1 });
