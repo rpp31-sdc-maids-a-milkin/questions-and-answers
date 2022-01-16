@@ -10,7 +10,7 @@ const getAnswers = function (questionId, page = 1, count = 5, callback) {
         question: questionId,
         page,
         count,
-        results: mapAnswers(data.answers),
+        results: mapAnswers(data),
       };
       if (mappedAnswers.results === -1) {
         mappedAnswers.results = [];
