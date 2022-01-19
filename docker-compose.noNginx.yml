@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  qa:
+    env_file: .env
+    build: ./
+    ports:
+      - "3002:3002"
+      - "443:443"
+    stdin_open: true

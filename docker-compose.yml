@@ -2,8 +2,17 @@ version: "3.3"
 services:
   qa:
     env_file: .env
-    image: "jcaughern/qa:latest"
+    build: ./
     ports:
       - "3002:3002"
       - "443:443"
     stdin_open: true
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80

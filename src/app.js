@@ -125,8 +125,8 @@ app.put('/qa/answers/:answer_id/report', (req, res, next) => {
   });
 });
 
-app.get('/loaderio-2ac346d79cc18d41d2b9af5142aaffe9.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, '/utils/loaderio-2ac346d79cc18d41d2b9af5142aaffe9.txt'));
+app.get('/loaderio-bc8c10011b88d8c4787999c30082470c.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, '/utils/loaderio-bc8c10011b88d8c4787999c30082470c.txt'));
 });
 
 app.use((err, req, res, next) => {

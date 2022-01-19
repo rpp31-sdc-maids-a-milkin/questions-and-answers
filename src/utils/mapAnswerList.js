@@ -13,7 +13,7 @@ const mapAnswers = (answers) => {
   if (answers === null) {
     return -1;
   }
-  return answers.map((answer) => {
+  return answers.answers.map((answer) => {
     const a = answer;
     return {
       answer_id: a.id,
