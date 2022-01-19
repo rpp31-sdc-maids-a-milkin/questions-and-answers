@@ -6,6 +6,7 @@ const express = require('express');
 
 const app = express();
 const cors = require('cors');
+const path = require('path');
 const getQuestions = require('./controllers/getQuestions');
 const getAnswers = require('./controllers/getAnswers');
 const postAnswer = require('./controllers/postAnswer');
@@ -122,6 +123,10 @@ app.put('/qa/answers/:answer_id/report', (req, res, next) => {
       res.status(204).json(data);
     }
   });
+});
+
+app.get('/loaderio-2ac346d79cc18d41d2b9af5142aaffe9.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, '/utils/loaderio-2ac346d79cc18d41d2b9af5142aaffe9.txt'));
 });
 
 app.use((err, req, res, next) => {

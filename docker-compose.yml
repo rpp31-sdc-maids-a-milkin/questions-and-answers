@@ -5,3 +5,5 @@ services:
     image: "jcaughern/qa:latest"
     ports:
       - "3002:3002"
+      - "443:443"
+    stdin_open: true
