@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3002
-EXPOSE 443
+# EXPOSE 3002
+# EXPOSE 443
 
 CMD ["npm", "start"]

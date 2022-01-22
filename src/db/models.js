@@ -8,16 +8,6 @@ const photoSchema = new Schema({
   url: String,
 });
 
-// photoSchema.pre('find', function() {
-//   this._startTime = Date.now();
-// });
-
-// photoSchema.post('find', function() {
-//   if (this._startTime != null) {
-//     console.log('Photo runtime in ms: ', Date.now() - this._startTime);
-//   }
-// });
-
 const Photo = model('Photo', photoSchema);
 
 const answerSchema = new Schema({
@@ -32,16 +22,6 @@ const answerSchema = new Schema({
   photos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }],
 });
 
-// answerSchema.pre('find', function() {
-//   this._startTime = Date.now();
-// });
-
-// answerSchema.post('find', function() {
-//   if (this._startTime != null) {
-//     console.log('Answer runtime in ms: ', Date.now() - this._startTime);
-//   }
-// });
-
 const Answer = model('Answer', answerSchema);
 
 const questionSchema = new Schema({
@@ -55,16 +35,6 @@ const questionSchema = new Schema({
   reported: { type: Boolean, default: false },
   answers: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
 });
-
-// questionSchema.pre('find', function() {
-//   this._startTime = Date.now();
-// });
-
-// questionSchema.post('find', function() {
-//   if (this._startTime != null) {
-//     console.log('Question runtime in ms: ', Date.now() - this._startTime);
-//   }
-// });
 
 const Question = model('Question', questionSchema);
 

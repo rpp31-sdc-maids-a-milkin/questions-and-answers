@@ -125,10 +125,6 @@ app.put('/qa/answers/:answer_id/report', (req, res, next) => {
   });
 });
 
-app.get('/loaderio-bc8c10011b88d8c4787999c30082470c.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, '/utils/loaderio-bc8c10011b88d8c4787999c30082470c.txt'));
-});
-
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });
